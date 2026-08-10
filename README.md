@@ -16,6 +16,7 @@ They are deliberately generic — no company-specific hosts, tokens or container
 | **wire-telemetry** | You learn about bugs from users. Error capture across server/client/jobs, errors→issues with dedup, SLOs you can measure. |
 | **verify-release** | "I think it works." A human-walkable test plan against a preview URL, and how to review agent output at volume. |
 | **explain-this-project** | You do not understand your own codebase. Documentation written for the operator, not the next agent. |
+| **detect-drift** | Docs, tests or specs have quietly stopped matching the code. The best candidate for a scheduled routine — it reads and files issues, and changes nothing. |
 
 ## Install
 
@@ -39,6 +40,7 @@ That is what high-output development looks like from the outside when there is n
 - **A claim you could be wrong about**, so a regression is detectable rather than a feeling
 - **A test plan**, so "it works" means someone used it
 - **Documentation for you**, so you can still review what you own
+- **Drift detection on a schedule**, because docs, tests and specs rot silently and nobody remembers to look
 
 ## A note on autonomy
 
