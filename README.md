@@ -16,6 +16,7 @@ They are deliberately generic — no company-specific hosts, tokens or container
 | **wire-telemetry** | You learn about bugs from users. Error capture across server/client/jobs, errors→issues with dedup, SLOs you can measure. |
 | **verify-release** | "I think it works." A human-walkable test plan against a preview URL, and how to review agent output at volume. |
 | **explain-this-project** | You do not understand your own codebase. Documentation written for the operator, not the next agent. |
+| **run-a-campaign** | Driving a body of work to completion — `/goal`, builder/breaker/reviewer roles on different models, evolutionary budget allocation, provable rewrites. |
 | **detect-drift** | Docs, tests or specs have quietly stopped matching the code. The best candidate for a scheduled routine — it reads and files issues, and changes nothing. |
 
 ## Install
