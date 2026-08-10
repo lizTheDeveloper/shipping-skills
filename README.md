@@ -16,6 +16,7 @@ They are deliberately generic — no company-specific hosts, tokens or container
 | **wire-telemetry** | You learn about bugs from users. Error capture across server/client/jobs, errors→issues with dedup, SLOs you can measure. |
 | **verify-release** | "I think it works." A human-walkable test plan against a preview URL, and how to review agent output at volume. |
 | **explain-this-project** | You do not understand your own codebase. Documentation written for the operator, not the next agent. |
+| **agent-personas** | You need a specific expert reviewer rather than a general-purpose agent. Fourteen worked personas — requirements, value chain, PM, code-quality rubrics, security, git, CloudFormation, training, zines. |
 | **run-a-campaign** | Driving a body of work to completion — `/goal`, builder/breaker/reviewer roles on different models, evolutionary budget allocation, provable rewrites. |
 | **detect-drift** | Docs, tests or specs have quietly stopped matching the code. The best candidate for a scheduled routine — it reads and files issues, and changes nothing. |
 
@@ -48,6 +49,10 @@ That is what high-output development looks like from the outside when there is n
 Every skill here draws the same line: automation may compute the next version, draft the notes, open the PR, prepare the rollback tag and run the checks — and then stop.
 
 **A human promotes to production.** The only thing that fires unsupervised is the rollback, because an unnecessary rollback is cheap and an unnecessary deploy is not.
+
+## Credits
+
+The personas in `skills/agent-personas/references/` come from [Liz Howard's persona directory](https://gist.github.com/lizTheDeveloper/e35939b321daaab4763aa8e8a639ffda) (<https://lizthe.dev>), used with the directory's blessing to remix and refactor.
 
 ## License
 
