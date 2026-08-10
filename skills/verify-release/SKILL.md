@@ -47,9 +47,33 @@ Preview: https://preview-abc.example.com
 
 Mark `[changed]` and `[side-effect]` so the walker knows which steps are the point and which are the net.
 
+## Put the plan in the pull request
+
+The test plan belongs **in the PR description, as markdown checkboxes** — not in a separate document nobody opens. Boxes get ticked as they are walked, so the PR itself records what was verified and by whom.
+
+Alongside it, **attach screenshots as evidence.** Drive the flows with Playwright against the preview URL, screenshot at the point where the expected result should be visible, and embed before/after in the description.
+
+This is the change that makes agent output reviewable at volume: the PR stops saying "done" and starts saying *here is the browser doing the thing*. A reviewer ticks boxes against pictures rather than reading a diff and hoping.
+
+```markdown
+## Test plan
+- [ ] Log in as an existing user -> dashboard loads, no console errors
+- [ ] [changed] Export a report -> CSV downloads, opens, has a header row
+- [ ] [side-effect] Saved filters still apply after the schema change
+- [ ] [regression net] Login still works
+
+## Screenshots
+| Before | After |
+|---|---|
+| ![before](...) | ![after](...) |
+Captured by Playwright against the preview URL.
+```
+
+**Never tick a box for a step that was not actually run.** An unrun step reported as passing is the single most damaging output of this skill — it launders an unknown into a verified claim. Leave it unticked and say why.
+
 ## Before promoting
 
-- Walk the plan on the preview, not on production
+- Walk the plan on the preview, not on production — and point Playwright at the preview URL too, never localhost
 - Confirm the rollback target is the version genuinely live right now, not the newest tag
 - Confirm telemetry is capturing on the preview, so a failure produces an event rather than a shrug
 
