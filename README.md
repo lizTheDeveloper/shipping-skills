@@ -4,7 +4,7 @@ A set of Claude Code skills for the part of software development that agents mak
 
 Agents remove the bottleneck on writing code. They do not remove the bottleneck on **understanding what you now own**. These skills cover the process that keeps up: release branches, versioning, telemetry, verification, documentation, and somewhere to deploy.
 
-They are deliberately generic — no company-specific hosts, tokens or container IDs. Worked examples come from a live system, but every vendor is swappable.
+They are deliberately generic — no company-specific hosts, tokens or container IDs. Where a vendor is named it is one working choice, not a requirement: Hetzner for a box, Coolify for a PaaS, Cloudflare for the edge, Vaultwarden for secrets, GlitchTip for errors, and **OpenRouter as the backend for any model that isn't Claude**. Worked examples come from a live system, but every vendor is swappable.
 
 ## The skills
 

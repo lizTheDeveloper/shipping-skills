@@ -48,6 +48,26 @@ Run these as separate agents, ideally on **different models**.
 | **Breaker** | Pointed at the same feature on a different model, told to **write tests that break it**. Edge cases, hostile input, ordering, concurrency, the paths the builder found boring. | It can no longer produce a genuinely failing test. |
 | **Reviewer** | Runs the PR review checklist. Boundaries, migrations, permissions, anything touching money or auth. | Checklist clean, with stated reasons. |
 
+### Reaching the other models
+
+**OpenRouter is the best backend for anything that isn't Claude.** One account and one credential reach models from every major provider, which is what makes a genuinely mixed panel practical instead of an integration project.
+
+[Ori](https://openrouter.ai/docs/guides/ori/harness) runs the agent CLI you already use on top of it:
+
+```bash
+curl -fsSL https://openrouter.ai/labs/ori/install.sh | bash
+ori login                                    # OAuth — no key to create or paste
+ori claude --model anthropic/claude-sonnet-4.6
+ori codex     ori hermes     ori opencode
+```
+
+Your flags and workflow pass through unchanged, so a breaker is the same command with a different `--model`.
+
+Two practical notes:
+
+- Check [discounted models](https://openrouter.ai/collections/discounted-models) before allocating a large campaign budget — the cheapest provider for a given model is often running a promotion, and adversarial testing is exactly the high-volume, lower-stakes work worth spending discounted tokens on.
+- Routing through a gateway sets a custom API base URL, which **disables Claude Code's Remote Control** (it requires talking to `api.anthropic.com` directly). Run a gateway-routed campaign and a phone-driven session as separate sessions.
+
 **Why a different model matters:** an agent that wrote the code writes tests that agree with the code. The suite is internally consistent and completely indifferent to whether the requirement was met. Disagreement is the product here, not throughput.
 
 ## Evolutionary allocation
