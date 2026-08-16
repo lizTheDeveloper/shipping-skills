@@ -1,6 +1,8 @@
 # Known false checkers
 
-Every entry here reported confidently and none of them threw. Append your own in the same shape: what the checker said, what was actually true, and the one detail that would have caught it.
+Every entry here reported confidently and none of them threw.
+
+Append your own in the same shape: what the checker said, what was actually true, and the one detail that would have caught it.
 
 | shape | what it reported | what was actually true | the tell |
 |---|---|---|---|
