@@ -10,7 +10,7 @@ description: >
 
 # Audit A Simulation
 
-**Phase 3 of three.** The numbers exist and something is now standing on them. Grounding the system is `ground-a-simulation`; finding numbers nobody can defend is `search-dont-argue`.
+**Phase 3 of three.** The numbers exist and something is now standing on them. Grounding the system is `ground-a-simulation`; finding numbers nobody can defend is `search-dont-argue`. `trust-your-instruments` is orthogonal to the arc, runs across all three phases, and is where a metric that never moves, a guard that has never fired, or a knob that turns out to be inert actually get handled.
 
 The characteristic failure here is not a crash. It is a plausible number.
 
@@ -18,7 +18,7 @@ The characteristic failure here is not a crash. It is a plausible number.
 
 The temptation on a system that already has numbers is to skip straight to the interesting question — is this particular metric real — and treat the boring one as settled. That's backwards, and it's expensive to discover backwards: any audit technique run on top of a missing foundation is measuring the gap with more precision, not measuring the system.
 
-Before trusting anything this system reports, check which of five foundations it actually has: determinism, stream-split randomness, an identity baseline, pinned metric definitions, and a null to score everything else against. Not "has someone mentioned" each of these — verify each one exists and holds, the same things `ground-a-simulation` says to build before the first measurement. See that skill, under **What you can pin before you know any numbers**.
+Before trusting anything this system reports, check which of five foundations it actually has: determinism, stream-split randomness, an identity baseline, pinned metric definitions, and a null to score everything else against. Not "has someone mentioned" each of these — verify each one exists and holds, the same things `ground-a-simulation` says to build before the first measurement. See that skill, under **What you can pin before you know any numbers**. For the metric-definition foundation specifically, "pinned" is not the same as "alive" — confirm a metric can move at all before trusting anything measured against it; see `trust-your-instruments`, under **A metric that cannot move**.
 
 If any of the five is missing, the answer is not "proceed carefully, adjust for the gap." It is **stop, and retrofit the missing foundation before trusting anything measured on top of it.** This is not caution for its own sake — it follows directly from the retrofit test: a missing foundation invalidates every number taken without it, so refining the audit technique on top of that gap only produces a more confident wrong answer. Stating this as a verdict, not a patch, is what stops the rest of this document from being read as a workaround for a problem it cannot actually fix by being careful.
 
