@@ -167,7 +167,7 @@ def split_frontmatter(text, path):
     return text[4:end], text[end + 5:]
 
 
-def check_common(path, expect_name, folded_desc, check_figures=True):
+def check_common(path, expect_name, folded_desc, check_figures=True, require_h1=True):
     if not os.path.exists(path):
         failures.append(f"{path}: does not exist")
         return False
@@ -187,7 +187,10 @@ def check_common(path, expect_name, folded_desc, check_figures=True):
     elif folded_desc and not re.search(r"^description:\s*>", fm, re.M):
         failures.append(f"{path}: description must use folded '>' (house style)")
 
-    if not re.search(r"^# \S", body, re.M):
+    # Skills are documents and open with an H1. An output style's body is a
+    # system prompt, not a document — it opens with the operative instruction,
+    # and an H1 there is padding. Different artifact, different rule.
+    if require_h1 and not re.search(r"^# \S", body, re.M):
         failures.append(f"{path}: no H1 title in body")
 
     for hit in PLACEHOLDERS.findall(text):
@@ -217,7 +220,7 @@ for name in EXPECTED_SKILLS:
 
 for name in EXPECTED_STYLES:
     p = os.path.join(REPO, "output-styles", f"{name}.md")
-    if check_common(p, name.capitalize(), False):
+    if check_common(p, name.capitalize(), False, require_h1=False):
         t = read(p)
         for bad in ("multiverse", "docs/design/vision.md", "mages"):
             if bad.lower() in t.lower():
@@ -310,6 +313,8 @@ python3 <scratchpad>/check-skills.py . ; echo "EXIT=$?"
 ```
 
 Expected: `EXIT=42` with **four** remaining `does not exist` lines (the four skills) and **no** line mentioning `output-styles/caveman.md`. Caveman is now green; the skills are not yet written.
+
+Note the checker exempts output styles from the H1-title rule. Skills are documents and open with an H1; an output style's body is a system prompt that opens with its operative instruction, and an H1 there would be the padding this task is forbidden to add.
 
 - [ ] **Step 7: Commit**
 
