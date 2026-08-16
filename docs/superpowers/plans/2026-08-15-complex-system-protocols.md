@@ -99,6 +99,8 @@ import sys
 
 REPO = sys.argv[1] if len(sys.argv) > 1 else "."
 
+# Artifacts the gate expects to exist. A skill is added here BEFORE it is
+# written, so the gate goes red first. That red is the point.
 EXPECTED_SKILLS = [
     "trust-your-instruments",
     "ground-a-simulation",
@@ -108,10 +110,13 @@ EXPECTED_SKILLS = [
 EXPECTED_STYLES = ["caveman"]
 
 # Positive control: these already exist on main and must keep passing.
+# If the gate ever reports zero failures AND zero controls checked, it is broken.
 CONTROL_SKILLS = ["detect-drift", "release-process", "version-and-claim"]
 
 PLACEHOLDERS = re.compile(r"\bTBD\b|\bTODO\b|\bFIXME\b|\bXXX\b|lorem ipsum", re.I)
 
+# Signature figures from the Multiverse Mages build. Any figure matching
+# FIGURE_SHAPE that is not in this set is an invented number until proven.
 KNOWN_FIGURES = {
     "40/40", "38/40", "12/12", "0/400", "46/64", "16/28", "65/84",
     "8/10", "3/12", "5/12", "0.0000", "91.4%", "94.3%", "1.19", "1.000",
@@ -120,6 +125,27 @@ KNOWN_FIGURES = {
     "50.4", "50.9", "51.0", "31%", "3,900", "4,306",
 }
 FIGURE_SHAPE = re.compile(r"\b\d+/\d+\b|\b\d+\.\d+%|\b\d+\.\d{3,4}\b")
+
+def _self_test():
+    """Positive control for the figure guard itself.
+
+    The three skill-level controls contain no figures at all, so without this
+    the strongest check in the probe would never be observed either accepting
+    or rejecting. A guard only ever seen rejecting nothing is not a guard.
+    """
+    good = "the null bot scored 40/40 against 38/40"
+    bad = "the null bot scored 39/41 against 12/97"
+    if [f for f in FIGURE_SHAPE.findall(good) if f not in KNOWN_FIGURES]:
+        return "figure guard rejected a known-good figure"
+    if not [f for f in FIGURE_SHAPE.findall(bad) if f not in KNOWN_FIGURES]:
+        return "figure guard accepted an invented figure"
+    return None
+
+
+_err = _self_test()
+if _err:
+    print(f"PROBE BROKEN: {_err}", file=sys.stderr)
+    sys.exit(1)
 
 failures = []
 controls_checked = 0
@@ -141,7 +167,7 @@ def split_frontmatter(text, path):
     return text[4:end], text[end + 5:]
 
 
-def check_common(path, expect_name, folded_desc):
+def check_common(path, expect_name, folded_desc, check_figures=True):
     if not os.path.exists(path):
         failures.append(f"{path}: does not exist")
         return False
@@ -167,6 +193,8 @@ def check_common(path, expect_name, folded_desc):
     for hit in PLACEHOLDERS.findall(text):
         failures.append(f"{path}: placeholder {hit!r}")
 
+    # Intra-file section refs must resolve to a heading in the same file,
+    # unless the ref names another artifact on the same line.
     headings = set(re.findall(r"^#{2,4}\s+(\d+(?:\.\d+)?)", body, re.M))
     for line in body.splitlines():
         for ref in re.findall(r"§(\d+\.\d+)", line):
@@ -174,9 +202,12 @@ def check_common(path, expect_name, folded_desc):
             if ref not in headings and not names_other:
                 failures.append(f"{path}: §{ref} resolves to nothing here")
 
-    for fig in FIGURE_SHAPE.findall(text):
-        if fig not in KNOWN_FIGURES:
-            failures.append(f"{path}: unverified figure {fig!r} — add to KNOWN_FIGURES or cite it")
+    if check_figures:
+        for fig in FIGURE_SHAPE.findall(text):
+            if fig not in KNOWN_FIGURES:
+                failures.append(
+                    f"{path}: unverified figure {fig!r} — check it against the plan's "
+                    f"Verified Figures table; do NOT widen KNOWN_FIGURES to pass")
 
     return True
 
@@ -198,7 +229,7 @@ for name in CONTROL_SKILLS:
         print(f"PROBE BROKEN: control skill missing: {p}", file=sys.stderr)
         sys.exit(1)
     before = len(failures)
-    check_common(p, name, True)
+    check_common(p, name, True, check_figures=False)
     controls_checked += 1
     if len(failures) != before:
         print(f"PROBE BROKEN: positive control {name} failed:", file=sys.stderr)
@@ -903,10 +934,10 @@ Expected: `EXIT=0`, `PASS — 4 skills, 1 styles, 3 positive controls`.
 - [ ] **Step 4: Confirm nothing from the scratchpad was committed**
 
 ```bash
-git log --stat --oneline complex-system-protocols ^main | grep -i "check-skills\|scratchpad" && echo "LEAK" || echo "clean"
+git log --stat --oneline complex-system-protocols ^main | grep -i "check-skills\|scratchpad\|\.superpowers" && echo "LEAK" || echo "clean"
 ```
 
-Expected: `clean`. Spec §10 forbids new committed tooling.
+Expected: `clean`. Spec §10 forbids new committed tooling. `.superpowers/` (the SDD workspace) is gitignored as of Task 1 and must never appear either.
 
 - [ ] **Step 5: Push and open the PR**
 
