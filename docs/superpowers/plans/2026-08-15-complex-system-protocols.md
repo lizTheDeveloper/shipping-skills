@@ -509,7 +509,7 @@ description: >
 **Phase 1 of three.** Here, no numbers exist yet — so build only what needs none. When the numbers are unknown and must be found, that is `search-dont-argue`. When they exist and are load-bearing, that is `audit-a-simulation`.
 ```
 
-- [ ] **Step 3: Write the ten sections, in spec order**
+- [ ] **Step 3: Write the twelve sections, in spec order**
 
 Spec §3.1 through §3.12 map to plain `##` headings. **Order is load-bearing** — §11 of the spec says if a draft reads as "do all of this before writing anything", the framing sections are too late and too quiet. So:
 
@@ -522,8 +522,9 @@ Spec §3.1 through §3.12 map to plain `##` headings. **Order is load-bearing** 
 7. `## Baselines that cannot re-bless themselves`
 8. `## Property tests on the arithmetic` — the Zeno stall, and *a property test is the positive control for a guard*
 9. `## The null before the first real one` — `40/40` vs `38/40`; `12/12` at median tick `707`; `8` of `10` at exactly `0.0000`
-10. `## One vocabulary`
-11. `## If it has an economy, model the flows first`
+10. `## Pin your metric definitions, with a version` — a metric name is not a definition; the free-parameter table; `definitionVersion`; the two-directional test, whose property is that **the document cannot go stale without the suite going red**
+11. `## One vocabulary`
+12. `## If it has an economy, model the flows first`
 
 - [ ] **Step 4: Write `references/determinism-checklist.md`**
 
