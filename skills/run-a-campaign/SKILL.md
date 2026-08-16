@@ -15,6 +15,14 @@ A campaign is a body of work driven to a **verifiable end state** by several age
 
 Use it for a roadmap phase, a rebuild, a re-implementation, a prototype you intend to replace, or a rewrite you need to prove is complete.
 
+## Measure the space before you commit to filling it
+
+A campaign aimed at content — more strategies, more variety, more depth — assumes the space it is filling actually has room to be filled. That assumption is checkable, and checking it is cheap relative to the alternative: one afternoon of measurement against months of planned work.
+
+One project committed months of planned content work to a strategy space an external critique had already called collapsed. A retrospective measurement — PCA over recorded runs, participation ratio, pairwise containment across arms — found a first principal component of `91.4%` of variance, a participation ratio of `1.19`, and cross-arm containment of `1.000`: the strategies were not exploring different things, they were stopping at different points along the same one. See `audit-a-simulation`, under **Has the strategy space collapsed?**, for the recipe.
+
+Run that measurement, or its equivalent for whatever space this campaign is meant to fill, before scoping the roadmap phase — not after it has shipped and the results all look the same.
+
 ## The engine: `/goal`
 
 `/goal <condition>` keeps Claude working across turns until a **separate evaluator model** confirms the condition holds. That separation is the point: completion is judged by something other than the model that did the work.

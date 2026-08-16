@@ -50,6 +50,22 @@ The spec says one thing, the code does another. Neither looks wrong in isolation
 
 The third list is the one people find most uncomfortable and most useful.
 
+## A document is not a ref for the code it describes
+
+Documentation drift has a sharper case buried inside it: a document that was accurate when written, and is now read as though it still is. **Date every measurement, and name the ref it was taken on.** An undated measurement stated in the present tense reads as current for as long as the document survives — nothing in the sentence itself marks it as having a shelf life.
+
+One project's `vision-audit.md` asserted a figure in the present tense and tagged the line `[executed]`, while a test file on the same commit carried the identical figure under the header "this is a historical record, not the current measurement." Two documents on `main`, contradicting each other — and the misleading one was the one people actually read. It cost two agents a full investigation each before anyone noticed the second document existed at all.
+
+### Index a docs directory by kind
+
+An undated, unlabeled docs directory invites exactly this. Mark every file by what kind of claim it is making:
+
+- **Authoritative** — a decision. If the code disagrees, either the code is wrong or the doc needs amending on purpose.
+- **Measured** — a record of something observed, at a ref, on a date. It ages; it does not get rewritten to stay current — a new observation is a new entry.
+- **Deferred** — decided early, for a release that has not arrived yet.
+
+Without the index, work gets re-derived that was already sitting in the directory — invisible, because nothing on the file said what kind of document it was. Two audits were commissioned in one project that repeated exactly this.
+
 ## Running it as a routine
 
 Schedule these; do not rely on remembering.
