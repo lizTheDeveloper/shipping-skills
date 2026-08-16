@@ -19,6 +19,34 @@ They are deliberately generic — no company-specific hosts, tokens or container
 | **agent-personas** | You need a specific expert reviewer rather than a general-purpose agent. Fourteen worked personas — requirements, value chain, PM, code-quality rubrics, security, git, CloudFormation, training, zines. |
 | **run-a-campaign** | Driving a body of work to completion — `/goal`, builder/breaker/reviewer roles on different models, evolutionary budget allocation, provable rewrites. |
 | **detect-drift** | Docs, tests or specs have quietly stopped matching the code. The best candidate for a scheduled routine — it reads and files issues, and changes nothing. |
+| **ground-a-simulation** | You are starting something whose output is a number you will have to trust. What to build before the first measurement, chosen by retrofit cost — and what *not* to put on a pre-1.0 merge gate. |
+| **search-dont-argue** | A design decision has become a number nobody can defend. The deliverable is the curve, not the value. |
+| **audit-a-simulation** | The numbers exist and something is standing on them. Silent zeros, collapsed strategy spaces, gates that stack PRs. |
+| **trust-your-instruments** | A check reported something — especially something negative — and you are about to act on it. Positive controls, the third exit, and the knob that turned out to be inert. |
+
+### The three phases
+
+The three simulation skills are one arc, and most projects sit in the middle for years:
+
+| | |
+|---|---|
+| **ground-a-simulation** | No numbers exist yet. Build only what needs none. |
+| **search-dont-argue** | The numbers are unknown and must be found. The longest phase. |
+| **audit-a-simulation** | Numbers exist and are load-bearing. Defend them. |
+
+The reason it is three and not two: **you cannot commit a baseline before you know what the numbers should be.** An *identity* baseline — same input, byte-identical output — needs no known-correct values and can land on day one. A *value* baseline — this rate falls in this band — is a claim about the design and cannot exist until the design has been searched. Conflating them makes teams either skip baselines entirely and lose reproducibility permanently, or commit guesses as thresholds and spend a year re-blessing them.
+
+**trust-your-instruments** runs across all three, and works on its own in a repo with no simulation in it at all.
+
+## Output styles
+
+| Style | What it does |
+|---|---|
+| **caveman** | Says it in the fewest words that lose no fact. Points at files instead of retelling them. |
+
+Caveman is the same rule the rest of this repo applies to infrastructure, applied to prose: **do not make a second copy of a fact that can rot.** Cite the file and line, name the doc and section, and keep only what lives nowhere else. Terse is not vague — dropping a number, a caveat or a path is a bug; dropping the sentence that introduces them is the point.
+
+It is the style the worked examples in these skills were written under.
 
 ## Install
 
@@ -26,7 +54,8 @@ Copy the skills into a project (or into `~/.claude/skills/` to have them everywh
 
 ```bash
 git clone https://github.com/lizTheDeveloper/shipping-skills.git
-cp -r shipping-skills/skills/* ~/.claude/skills/
+cp -r shipping-skills/skills/*         ~/.claude/skills/
+cp -r shipping-skills/output-styles/*  ~/.claude/output-styles/
 ```
 
 Claude invokes them by description, so you generally do not need to name them. You can also ask directly: *"use the release-process skill on this repo."*
@@ -43,6 +72,8 @@ That is what high-output development looks like from the outside when there is n
 - **A test plan**, so "it works" means someone used it
 - **Documentation for you**, so you can still review what you own
 - **Drift detection on a schedule**, because docs, tests and specs rot silently and nobody remembers to look
+
+There is a second version of the problem, for anyone whose software produces a *number* rather than a page: a green suite, a clean deploy and a truthful changelog are all compatible with a model that has been computing zero for a year. Nothing throws, nothing is corrupt, and the result reads as a finding rather than a bug. The last four skills are for that case.
 
 ## A note on autonomy
 
