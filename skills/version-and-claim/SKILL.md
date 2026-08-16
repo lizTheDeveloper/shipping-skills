@@ -40,6 +40,14 @@ This gives you something arbitrary date-based releases do not: a way to say "eve
 
 A version scheme can encode the boundary. One live example: MINOR is cohort-tied and **even means stable, odd means unstable**, so the version number itself says whether you are looking at a tested line; PATCH encodes week-and-day within the cohort. Encoding is optional — having a boundary is not.
 
+### MINOR parity as a worked pattern
+
+One version scheme ties MINOR to a validation gate rather than a cohort window: **even MINOR means a balance harness ran against a committed baseline and passed; odd MINOR means that has not happened yet.** Every capability under this scheme ships **twice**. It lands first on an odd MINOR, alongside everything else still being validated. It is *promoted* to the next even MINOR only once its own baseline goes green — the even release is **earned, not scheduled**; nothing on a calendar or a task board decides it, the gate does.
+
+That only holds if the gate is **enforced in CI**, not merely intended. A parity scheme that depends on someone remembering to run the harness before tagging an even number lies within a month — not from bad faith, from the same pressure that causes every other skipped step under deadline.
+
+And say the boundary out loud: below the version where the harness first exists, parity is **undefined** — not "even by default", not "not yet meaningful in a good way." Claiming it for versions that predate the thing it measures is exactly the unfalsifiable claim this skill exists to prevent.
+
 ## Claims: the part people skip
 
 **Every release should assert something that could turn out to be false.**

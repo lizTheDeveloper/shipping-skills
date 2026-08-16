@@ -35,6 +35,14 @@ Why two lanes: it lets you ship an urgent fix without dragging along half-finish
 
 **A human promotes to production.** Automation may compute the next version, draft the release notes, open the PR, and prepare the rollback tag. It stops there. The only thing that should fire unsupervised is the **rollback**, because the cost of an unnecessary rollback is low and the cost of an unnecessary deploy is not.
 
+## Gate weight is staged
+
+The "one CI check that blocks the merge" rule above says nothing about what that check should cost, and pre-1.0 that gap matters: **the per-merge gate should carry only cheap, deterministic checks** — typecheck, lint, dependency purity, fast tests. Anything expensive — a long simulation run, a full balance validation, a load test — runs in parallel, visible to anyone who looks, and **not required to merge**. See `ground-a-simulation`, under **Rigor is staged — what this does not ask of your merge gate**, and `audit-a-simulation`, under **Split your gates by cost**, for the general form.
+
+Pre-1.0, a broken contract is a named release-note entry, not a merge failure — that is what `0.x` means, and saying so plainly is honest rather than lax.
+
+Get this wrong and the expensive check becomes the bottleneck for pull requests that have nothing to do with what it is checking. One project's 200-year balance simulation cost `830`–`1154` seconds against a `2400`-second runner timeout; held in the merge gate, it stacked seven unrelated pull requests behind it in a single day.
+
 ## Preview deployments
 
 Every deploy branch gets a running URL someone can click.
