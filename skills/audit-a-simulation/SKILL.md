@@ -4,13 +4,15 @@ description: >
   Use when a running simulation, game or model is producing numbers you are not
   sure you can trust — a metric that never moves, a balance result that might be
   a bug wearing a design outcome's clothes, a strategy space that may have
-  collapsed, a gate that stacks unrelated PRs. Also use when inheriting a system
-  that already has baselines.
+  collapsed, a gate that stacks unrelated PRs, or results that do not reproduce
+  run to run. Also use when inheriting a system that already has baselines.
 ---
 
 # Audit A Simulation
 
 **Phase 3 of three.** The numbers exist and something is now standing on them. Grounding the system is `ground-a-simulation`; finding numbers nobody can defend is `search-dont-argue`. `trust-your-instruments` is orthogonal to the arc, runs across all three phases, and is where a metric that never moves, a guard that has never fired, or a knob that turns out to be inert actually get handled.
+
+*Every figure below is a separate recorded run against the `lizTheDeveloper/multiverse_mages` build, measured August 2026 — not one audit sliced four ways.*
 
 The characteristic failure here is not a crash. It is a plausible number.
 

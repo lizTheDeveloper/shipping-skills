@@ -15,6 +15,8 @@ description: >
 
 **Phase 1 of three.** Here, no numbers exist yet — so build only what needs none. When the numbers are unknown and must be found, that is `search-dont-argue`. When they exist and are load-bearing, that is `audit-a-simulation`.
 
+*The worked figures below are from the `lizTheDeveloper/multiverse_mages` build, measured August 2026 — each one its own recorded run, not one campaign read four ways.*
+
 ## The retrofit test
 
 A team with no numbers yet reaches for the wrong default in both directions: either it defers everything ("we'll add rigor once we know what good looks like") or it front-loads everything ("commit thresholds now, tune them later"). Both fail the same way — the first loses reproducibility permanently, the second produces a gate nobody trusts.
@@ -54,7 +56,7 @@ Everything above is about what to *build*, decided by the retrofit test. It says
 Two consequences of that split that read as sloppiness and aren't:
 
 - **Pre-1.0, breaking a contract is not a merge failure.** It's a named entry in the release notes. That is what `0.x` means — the contracts are still moving because nobody has finished trying to satisfy them yet, and gating on a moving target just teaches people to route around the gate.
-- **A value-baseline gate cannot block merges before the numbers exist**, and shouldn't block them even once they do if it's slow. Multiverse Mages' 200-year balance gate costs `830`–`1154` seconds against a `2400`-second runner timeout; held in the merge gate, it once stacked seven unrelated pull requests waiting behind it in a single day. It now runs in its own parallel job, not required to merge — a regression is visible immediately, and nothing is blocked waiting to find out.
+- **A value-baseline gate cannot block merges before the numbers exist**, and shouldn't block them even once they do if it's slow. Multiverse Mages' 200-year balance gate once stacked seven unrelated pull requests behind it in a single day; see `audit-a-simulation`, under **Split your gates by cost**, for the timing. It now runs in its own parallel job, not required to merge — a regression is visible immediately, and nothing is blocked waiting to find out.
 
 What does **not** relax pre-1.0: TDD at the unit level, determinism, and property tests on the arithmetic. Those are cheap per run and expensive to retrofit — favourable on both axes at once, which is exactly why they're the ones that stay.
 
@@ -112,7 +114,7 @@ The general form of the lesson: **a property test is the positive control for a 
 
 Build the do-nothing agent before you build any strategy. Score everything else as **margin over null**, not as an absolute number — an absolute score tells you nothing about whether the system rewards playing at all.
 
-Multiverse Mages built this late enough to be embarrassed by it: `permit-then-idle`, a bot that grants permissions and then does nothing else, scored `40/40`. `permissive-breadth`, a bot that actually plays, scored `38/40` — the bot that does nothing beat the bot that plays. Separately, `uniform-random-legal` — a bot that presses buttons uniformly at random among whatever is legal — ascended `12/12` of its runs, at a median tick of `707`. And across one batch of strategies, eight of ten sat at a win rate of exactly `0.0000`. That isn't ten data points about strategy quality; it's one data point about there being no ladder to climb, repeated ten times.
+Multiverse Mages built this late enough to be embarrassed by it: `permit-then-idle`, a bot that grants permissions and then does nothing else, scored `40/40`. `permissive-breadth`, a bot that actually plays, scored `38/40` — the bot that does nothing beat the bot that plays. Separately, `uniform-random-legal` — a bot that presses buttons uniformly at random among whatever is legal — ascended (reached the win condition) in `12/12` of its runs, at a median tick of `707`. And across one batch of strategies, eight of ten sat at a win rate of exactly `0.0000`. That isn't ten data points about strategy quality; it's one data point about there being no ladder to climb, repeated ten times.
 
 None of these are findings about the strategies. They're findings about the system, visible only because a null existed to compare against. Without it from the start, there is no way to tell whether anything built afterward matters at all — a strategy that beats a non-existent baseline hasn't beaten anything.
 

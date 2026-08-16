@@ -10,7 +10,9 @@ description: >
 
 # Trust Your Instruments
 
-A check that answers a question about the wrong input is worse than no check, because it answers confidently and nothing throws.
+*The examples throughout are separate recorded runs against the `lizTheDeveloper/multiverse_mages` build, measured August 2026 — not one incident retold four ways.*
+
+A check that answers a question about the wrong input is worse than no check, because it answers confidently and nothing throws. This skill is orthogonal to the three-phase simulation arc — `ground-a-simulation`, `search-dont-argue`, `audit-a-simulation` — and runs alongside all three rather than being a fourth phase in it.
 
 ## When a check reports the negative case, confirm the check works
 
@@ -52,13 +54,13 @@ Nothing found this — not review, not the suite, not months of production use. 
 
 An axis that cannot move produces a one-cell archive that looks exactly like a finding: every run lands in the same bucket, the report renders cleanly, and nothing in the output signals that the metric was structurally incapable of reading anything else. Before pointing a human or an optimiser at a metric, prove the metric can move at all — an optimiser aimed at a metric that cannot move runs forever reporting progress against a number that was never going to change.
 
-In one registry, 16 of 28 registered metrics were quarantined as structurally incapable of moving. Most of those had been reading as healthy constants, not as obviously broken — which is what makes this the output-side twin of the next section: a value that never moves and a knob that changes nothing are the same failure, once on what a check produces and once on what it consumes.
+16 of 28 registered metrics were quarantined as structurally incapable of moving. Most of those had been reading as healthy constants, not as obviously broken — which is what makes this the output-side twin of the next section: a value that never moves and a knob that changes nothing are the same failure, once on what a check produces and once on what it consumes.
 
 ## Prove the knob moves the system
 
 This is the input-side dual of the section above: instead of asking whether a metric can move, ask whether a tuning constant does anything at all. Amplify every authored magnitude by ×100, re-run, and diff against the unmodified run. Byte-identical output means the value is wired into the config and inert in the system — read, maybe even logged, but never consulted by anything that changes the outcome.
 
-One run of this against a set of authored constants:
+Amplifying a set of authored constants ×100 and diffing against the unmodified run, on lesson and research counts:
 
 | primitive | lessons | research | verdict |
 |---|--:|--:|---|
@@ -68,6 +70,8 @@ One run of this against a set of authored constants:
 | scribe-rate ×100 | 1414 | 4407 | moves |
 | lifespan ×100 | 1867 | 4571 | **byte-identical** |
 | fertility ×100 | 1867 | 4571 | **byte-identical** |
+
+`lessons` and `research` are just two run outputs the amplified run was checked against — nothing more meaningful than a pair of counters — and the whole diagnostic rests on `lifespan` and `fertility`'s rows landing on those same two counters unchanged: identical output under a ×100 amplification is the finding, not an incidental detail of it.
 
 Three of the five rates were genuinely live — `teach-rate` the strongest of them, moving lessons by nearly a third, and previously on record as the constant measured most confidently to be doing nothing. `lifespan` and `fertility` were wired and inert: present in the config, read somewhere in the code, connected to nothing that changed the run.
 

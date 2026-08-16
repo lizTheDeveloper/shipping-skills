@@ -73,7 +73,7 @@ That is what high-output development looks like from the outside when there is n
 - **Documentation for you**, so you can still review what you own
 - **Drift detection on a schedule**, because docs, tests and specs rot silently and nobody remembers to look
 
-There is a second version of the problem, for anyone whose software produces a *number* rather than a page: a green suite, a clean deploy and a truthful changelog are all compatible with a model that has been computing zero for a year. Nothing throws, nothing is corrupt, and the result reads as a finding rather than a bug. The last four skills are for that case.
+There is a second version of the problem, for anyone whose software produces a *number* rather than a page: a green suite, a clean deploy and a truthful changelog are all compatible with a model that has been computing zero for a year. Nothing throws, nothing is corrupt, and the result reads as a finding rather than a bug. `ground-a-simulation`, `search-dont-argue`, `audit-a-simulation`, and `trust-your-instruments` are for that case.
 
 ## A note on autonomy
 

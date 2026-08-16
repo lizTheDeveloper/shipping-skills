@@ -12,6 +12,8 @@ description: >
 
 **Phase 2 of three, and the one you live in longest.** The numbers are unknown and have to be found. Grounding the system is `ground-a-simulation`; defending the numbers once they are load-bearing is `audit-a-simulation`.
 
+*Figures below are drawn from the `lizTheDeveloper/multiverse_mages` build, measured August 2026, each from its own separate recorded run.*
+
 If a number has to be figured out, do not figure it out. **Search it. The deliverable is the curve, not the value.**
 
 ## The rule
@@ -34,7 +36,7 @@ This is where the finding usually dies. A flat curve gets read as "the sweep did
 
 ## Prerequisite: the metric must be able to move
 
-This is stage zero, not an optional check before the real work starts. A sweep — or an optimiser, or a tuner — pointed at a metric that structurally cannot move will run for as long as you let it, reporting a flat line at every step, and there is no way from inside the sweep to tell that flat line apart from a real finding. One registry had 16 of 28 registered metrics quarantined as structurally incapable of moving at all; every one of those would have produced a technically-correct, entirely useless flat curve if searched before anyone checked.
+This is stage zero, not an optional check before the real work starts. A sweep — or an optimiser, or a tuner — pointed at a metric that structurally cannot move will run for as long as you let it, reporting a flat line at every step, and there is no way from inside the sweep to tell that flat line apart from a real finding. 16 of 28 registered metrics were quarantined as structurally incapable of moving at all; every one of those would have produced a technically-correct, entirely useless flat curve if searched before anyone checked.
 
 Prove the metric can move before pointing a sweep at it. See `trust-your-instruments`, under **A metric that cannot move**, for how to check that before spending a run on it.
 
@@ -56,7 +58,7 @@ Re-run the null every round, alongside whatever candidate is being swept. This r
 
 These are two different questions, and running one search to answer both wastes the search and answers neither. **Tuning** asks what value a constant should take, shared across the whole system — search a single shared constant. **Variety** asks how different instances of something should differ from each other — search a per-instance factor, one value per instance, not one value for all of them.
 
-A shared constant swept for tuning can only ever move every instance the same amount, in the same direction, at the same time. It cannot introduce variety, because it has no way to treat one instance differently from another — and searching it as if it could produces a curve that looks like it's exploring diversity while it is actually just rescaling everything uniformly. Multiverse Mages priced all 300 nodes with exactly this conflation: a shared cost surface applied uniformly, searched to move containment, and containment moved the **wrong way** — because a term shared across every universe can only reweight terms that already differ between universes, not create a difference where none existed. The fix was a per-universe factor, not a better-tuned shared one.
+A shared constant swept for tuning can only ever move every instance the same amount, in the same direction, at the same time. It cannot introduce variety, because it has no way to treat one instance differently from another — and searching it as if it could produces a curve that looks like it's exploring diversity while it is actually just rescaling everything uniformly. Multiverse Mages priced all 300 nodes — assigned every node in its knowledge grid a research cost — with exactly this conflation: a shared cost surface applied uniformly, searched to move containment (the domain outcome the sweep was aimed at — how confined species stayed to their own territory, not the `|A ∩ B| / |A|` set-overlap metric `audit-a-simulation` defines under its own name), and containment moved the **wrong way** — because a term shared across every universe can only reweight terms that already differ between universes, not create a difference where none existed. The fix was a per-universe factor, not a better-tuned shared one.
 
 ## An argument survives the evidence
 
