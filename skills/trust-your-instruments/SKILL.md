@@ -46,7 +46,7 @@ The fix is the same in every case: locate input by an explicit, named identifier
 
 The most dangerous broken guard is the one that looks right. `assertRepresentable` sat in the most-reviewed file in its codebase, looking correct for the project's entire history, passing against roughly 3,900 green tests. It was a bounds check meant to catch non-representable values — and every comparison with NaN is false, so a NaN sails through a bounds check without ever tripping it. The one value the guard existed to catch was structurally incapable of triggering it.
 
-Nothing found this — not review, not the suite, not months of production use. It was found by someone asking whether the guard actually worked, not by a test going red. That is the tell: a guard that has never fired is not evidence that nothing has gone wrong. It is an untested code path wearing a green suite as camouflage. The remedy is a property test, not a unit test with more cases — "for all non-representable inputs, including NaN, this throws" — see `ground-a-simulation`, under **Property tests on the arithmetic, before any behaviour exists**.
+Nothing found this — not review, not the suite, not months of production use. It was found by someone asking whether the guard actually worked, not by a test going red. That is the tell: a guard that has never fired is not evidence that nothing has gone wrong. It is an untested code path wearing a green suite as camouflage. The remedy is a property test, not a unit test with more cases — "for all non-representable inputs, including NaN, this throws" — see `ground-a-simulation`, under **Property tests on the arithmetic**.
 
 ## A metric that cannot move
 
