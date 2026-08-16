@@ -41,7 +41,7 @@ Two failure modes this table exists to stop:
 
 Multiverse Mages states this admission out loud rather than pretending an invariant holds where it can't: its MINOR version parity is the project's balance-validation signal, and parity is **undefined below 0.5.0**, because there is no harness before then. Saying "this claim doesn't apply yet" is better than a green checkmark with nothing behind it.
 
-Metric definitions are the same shape at a smaller scale — a name like "ticks to 50% loss" looks pinned and isn't, until every free parameter it hides has an answer on record. See `references/metric-definition-template.md` for the mechanism: a table of what's pinned, why, and a version that goes stale loudly instead of silently.
+Metric definitions are the same shape at a smaller scale — a name like "ticks to 50% loss" looks pinned and isn't, until every free parameter it hides has an answer on record. See **Pin your metric definitions, with a version**, below.
 
 ## Rigor is staged — what this does not ask of your merge gate
 
@@ -115,6 +115,14 @@ Build the do-nothing agent before you build any strategy. Score everything else 
 Multiverse Mages built this late enough to be embarrassed by it: `permit-then-idle`, a bot that grants permissions and then does nothing else, scored `40/40`. `permissive-breadth`, a bot that actually plays, scored `38/40` — the bot that does nothing beat the bot that plays. Separately, `uniform-random-legal` — a bot that presses buttons uniformly at random among whatever is legal — ascended `12/12` of its runs, at a median tick of `707`. And across one batch of strategies, eight of ten sat at a win rate of exactly `0.0000`. That isn't ten data points about strategy quality; it's one data point about there being no ladder to climb, repeated ten times.
 
 None of these are findings about the strategies. They're findings about the system, visible only because a null existed to compare against. Without it from the start, there is no way to tell whether anything built afterward matters at all — a strategy that beats a non-existent baseline hasn't beaten anything.
+
+## Pin your metric definitions, with a version
+
+A metric name is not a definition. "Ticks for 50% of nodes to be lost" sounds precise and settles nothing: it doesn't say how often the cohort is counted, what happens to something that was lost and then rediscovered, or what to report when half the cohort is still alive at the moment the run ends. Somebody decides those questions whether or not the decision gets written down — the difference is only whether the next person to touch the metric reinvents the answer differently, and two incompatible quantities end up compared under one name without anyone noticing the name stopped meaning one thing.
+
+The mechanism: a table of every free parameter the metric name hides, with the question it answers and why that answer rather than another one; a `definitionVersion`, digested from the normative definition text and pinned by a test, so a change to what the metric means is a deliberate, reviewable act instead of a silent edit; and the table asserted against the registry of constants **in both directions** — a constant that exists in the registry with no row in the table fails, and a row in the table for a constant the registry no longer declares fails too.
+
+That two-directional assertion is what earns this a section: it is the one kind of design document that **cannot go stale without the suite going red**. See `references/metric-definition-template.md` for the table format, the version mechanism, and three worked rows.
 
 ## One vocabulary
 
